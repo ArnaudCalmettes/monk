@@ -1,3 +1,5 @@
+pub mod key;
 pub mod note;
 
-pub use note::Note;
+pub use key::*;
+pub use note::*;
