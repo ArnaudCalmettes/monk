@@ -1,0 +1,5 @@
+[package]
+name = "monk"
+version = "0.1.0"
+authors = ["Arnaud Calmettes <calmettes.arnaud@gmail.com>"]
+edition = "2018"
