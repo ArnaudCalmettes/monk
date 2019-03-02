@@ -5,19 +5,19 @@
 //!
 //! For convenience, all notes up to one sharp or one flat are defined as clonable constants:
 //!
-//! * `NOTE_C`: C
-//! * `NOTE_F_SHARP`: F♯
-//! * `NOTE_B_FLAT`: B♭
+//! * `C`: C
+//! * `F_SHARP`: F♯
+//! * `B_FLAT`: B♭
 //! * ...
 //!
 //! ```
 //! use monk::note::*;
 //!
-//! let c_natural: Note = NOTE_C;
-//! let f_sharp: Note = NOTE_F_SHARP;
-//! let b_flat: Note = NOTE_B_FLAT;
+//! let c_natural: Note = C;
+//! let f_sharp: Note = F_SHARP;
+//! let b_flat: Note = B_FLAT;
 //!
-//! let g_double_sharp = NOTE_G_SHARP.augment(); // Add one more sharp
+//! let g_double_sharp = G_SHARP.augment(); // Add one more sharp
 //!
 //! assert_eq!(format!("{}", c_natural), String::from("C"));
 //! assert_eq!(format!("{}", f_sharp), String::from("F#"));
@@ -40,20 +40,20 @@
 //!
 //! ```
 //! # use monk::note::*;
-//! assert_eq!(NOTE_C.chroma(), 0);
-//! assert_eq!(NOTE_C_SHARP.chroma(), 1);
-//! assert_eq!(NOTE_D.chroma(), 2);
-//! assert_eq!(NOTE_B.chroma(), 11);
+//! assert_eq!(C.chroma(), 0);
+//! assert_eq!(C_SHARP.chroma(), 1);
+//! assert_eq!(D.chroma(), 2);
+//! assert_eq!(B.chroma(), 11);
 //!
-//! assert_eq!(Note::from_chroma(0, true), NOTE_C);
-//! assert_eq!(Note::from_chroma(1, true), NOTE_C_SHARP);
-//! assert_eq!(Note::from_chroma(2, true), NOTE_D);
+//! assert_eq!(Note::from_chroma(0, true), C);
+//! assert_eq!(Note::from_chroma(1, true), C_SHARP);
+//! assert_eq!(Note::from_chroma(2, true), D);
 //!
 //! // Represent chroma 2 as a diminished D instead of an augmented C
-//! assert_eq!(Note::from_chroma(1, false), NOTE_D_FLAT);
+//! assert_eq!(Note::from_chroma(1, false), D_FLAT);
 //!
 //! // Any i8 value is accepted.
-//! assert_eq!(Note::from_chroma(-34, true), NOTE_D);
+//! assert_eq!(Note::from_chroma(-34, true), D);
 //! ```
 //!
 //! The second parameter to `Note::from_chroma` is used to choose whether chromatic notes should be
@@ -65,8 +65,8 @@
 //!
 //! ```
 //! # use monk::note::*;
-//! assert!(NOTE_C_SHARP != NOTE_D_FLAT);              // C# and Db are not the same note
-//! assert!(NOTE_C_SHARP.is_enharmonic(NOTE_D_FLAT));  // But they are enharmonic
+//! assert!(C_SHARP != D_FLAT);              // C# and Db are not the same note
+//! assert!(C_SHARP.is_enharmonic(D_FLAT));  // But they are enharmonic
 //! ```
 use std::fmt;
 
@@ -154,147 +154,123 @@ const NATURAL: i8 = 0;
 const SHARP: i8 = 1;
 const FLAT: i8 = -1;
 
-pub const NOTE_C: Note = Note {
+pub const C: Note = Note {
     base: NoteRoot::C,
     alt: NATURAL,
 };
 
-pub const NOTE_C_SHARP: Note = Note {
+pub const C_SHARP: Note = Note {
     base: NoteRoot::C,
     alt: SHARP,
 };
 
-pub const NOTE_C_FLAT: Note = Note {
+pub const C_FLAT: Note = Note {
     base: NoteRoot::C,
     alt: FLAT,
 };
 
-pub const NOTE_D: Note = Note {
+pub const D: Note = Note {
     base: NoteRoot::D,
     alt: NATURAL,
 };
 
-pub const NOTE_D_SHARP: Note = Note {
+pub const D_SHARP: Note = Note {
     base: NoteRoot::D,
     alt: SHARP,
 };
 
-pub const NOTE_D_FLAT: Note = Note {
+pub const D_FLAT: Note = Note {
     base: NoteRoot::D,
     alt: FLAT,
 };
 
-pub const NOTE_E: Note = Note {
+pub const E: Note = Note {
     base: NoteRoot::E,
     alt: NATURAL,
 };
 
-pub const NOTE_E_SHARP: Note = Note {
+pub const E_SHARP: Note = Note {
     base: NoteRoot::E,
     alt: SHARP,
 };
 
-pub const NOTE_E_FLAT: Note = Note {
+pub const E_FLAT: Note = Note {
     base: NoteRoot::E,
     alt: FLAT,
 };
 
-pub const NOTE_F: Note = Note {
+pub const F: Note = Note {
     base: NoteRoot::F,
     alt: NATURAL,
 };
 
-pub const NOTE_F_SHARP: Note = Note {
+pub const F_SHARP: Note = Note {
     base: NoteRoot::F,
     alt: SHARP,
 };
 
-pub const NOTE_F_FLAT: Note = Note {
+pub const F_FLAT: Note = Note {
     base: NoteRoot::F,
     alt: FLAT,
 };
 
-pub const NOTE_G: Note = Note {
+pub const G: Note = Note {
     base: NoteRoot::G,
     alt: NATURAL,
 };
 
-pub const NOTE_G_SHARP: Note = Note {
+pub const G_SHARP: Note = Note {
     base: NoteRoot::G,
     alt: SHARP,
 };
 
-pub const NOTE_G_FLAT: Note = Note {
+pub const G_FLAT: Note = Note {
     base: NoteRoot::G,
     alt: FLAT,
 };
 
-pub const NOTE_A: Note = Note {
+pub const A: Note = Note {
     base: NoteRoot::A,
     alt: NATURAL,
 };
 
-pub const NOTE_A_SHARP: Note = Note {
+pub const A_SHARP: Note = Note {
     base: NoteRoot::A,
     alt: SHARP,
 };
 
-pub const NOTE_A_FLAT: Note = Note {
+pub const A_FLAT: Note = Note {
     base: NoteRoot::A,
     alt: FLAT,
 };
 
-pub const NOTE_B: Note = Note {
+pub const B: Note = Note {
     base: NoteRoot::B,
     alt: NATURAL,
 };
 
-pub const NOTE_B_SHARP: Note = Note {
+pub const B_SHARP: Note = Note {
     base: NoteRoot::B,
     alt: SHARP,
 };
 
-pub const NOTE_B_FLAT: Note = Note {
+pub const B_FLAT: Note = Note {
     base: NoteRoot::B,
     alt: FLAT,
 };
 
 const NOTES_SHARP: [Note; 12] = [
-    NOTE_C,
-    NOTE_C_SHARP,
-    NOTE_D,
-    NOTE_D_SHARP,
-    NOTE_E,
-    NOTE_F,
-    NOTE_F_SHARP,
-    NOTE_G,
-    NOTE_G_SHARP,
-    NOTE_A,
-    NOTE_A_SHARP,
-    NOTE_B,
+    C, C_SHARP, D, D_SHARP, E, F, F_SHARP, G, G_SHARP, A, A_SHARP, B,
 ];
 
-const NOTES_FLAT: [Note; 12] = [
-    NOTE_C,
-    NOTE_D_FLAT,
-    NOTE_D,
-    NOTE_E_FLAT,
-    NOTE_E,
-    NOTE_F,
-    NOTE_G_FLAT,
-    NOTE_G,
-    NOTE_A_FLAT,
-    NOTE_A,
-    NOTE_B_FLAT,
-    NOTE_B,
-];
+const NOTES_FLAT: [Note; 12] = [C, D_FLAT, D, E_FLAT, E, F, G_FLAT, G, A_FLAT, A, B_FLAT, B];
 
 impl Note {
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(Note::new(NoteRoot::F, -1), NOTE_F_FLAT);
-    /// assert_eq!(Note::new(NoteRoot::A, 0), NOTE_A);
-    /// assert_eq!(Note::new(NoteRoot::G, 1), NOTE_G_SHARP);
+    /// assert_eq!(Note::new(NoteRoot::F, -1), F_FLAT);
+    /// assert_eq!(Note::new(NoteRoot::A, 0), A);
+    /// assert_eq!(Note::new(NoteRoot::G, 1), G_SHARP);
     /// ```
     pub fn new(base: NoteRoot, alt: i8) -> Self {
         Note { base, alt }
@@ -304,7 +280,7 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(NOTE_G_SHARP.base(), NoteRoot::G);
+    /// assert_eq!(G_SHARP.base(), NoteRoot::G);
     /// ```
     pub fn base(&self) -> NoteRoot {
         self.base.clone()
@@ -317,9 +293,9 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(NOTE_C_SHARP.alt(), 1);
-    /// assert_eq!(NOTE_F.alt(), 0);
-    /// assert_eq!(NOTE_A_FLAT.alt(), -1);
+    /// assert_eq!(C_SHARP.alt(), 1);
+    /// assert_eq!(F.alt(), 0);
+    /// assert_eq!(A_FLAT.alt(), -1);
     /// ```
     pub fn alt(&self) -> i8 {
         self.alt
@@ -331,8 +307,8 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(NOTE_B_FLAT.chroma(), NoteRoot::B.chroma() - 1);
-    /// assert_eq!(NOTE_C_SHARP.chroma(), NoteRoot::C.chroma() + 1);
+    /// assert_eq!(B_FLAT.chroma(), NoteRoot::B.chroma() - 1);
+    /// assert_eq!(C_SHARP.chroma(), NoteRoot::C.chroma() + 1);
     /// ```
     pub fn chroma(&self) -> Chroma {
         self.base.chroma() + self.alt
@@ -345,10 +321,10 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(Note::from_chroma(3, true), NOTE_D_SHARP);
-    /// assert_eq!(Note::from_chroma(3, false), NOTE_E_FLAT);
-    /// assert_eq!(Note::from_chroma(48, true), NOTE_C);
-    /// assert_eq!(Note::from_chroma(-18, true), NOTE_F_SHARP);
+    /// assert_eq!(Note::from_chroma(3, true), D_SHARP);
+    /// assert_eq!(Note::from_chroma(3, false), E_FLAT);
+    /// assert_eq!(Note::from_chroma(48, true), C);
+    /// assert_eq!(Note::from_chroma(-18, true), F_SHARP);
     /// ```
     pub fn from_chroma(chroma: Chroma, sharp: bool) -> Self {
         let chroma = wrap_chroma(chroma) as usize;
@@ -365,7 +341,7 @@ impl Note {
     /// # use monk::note::*;
     /// let note = Note::new(NoteRoot::B, 7);
     /// assert_eq!(format!("{}", note), String::from("B#######"));
-    /// assert_eq!(note.reduce(), NOTE_F_SHARP);
+    /// assert_eq!(note.reduce(), F_SHARP);
     /// ```
     pub fn reduce(&self) -> Self {
         Self::from_chroma(self.chroma(), self.alt >= 0)
@@ -377,8 +353,8 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(NOTE_C.augment(), NOTE_C_SHARP);
-    /// assert_eq!(NOTE_B.augment(), NOTE_B_SHARP);
+    /// assert_eq!(C.augment(), C_SHARP);
+    /// assert_eq!(B.augment(), B_SHARP);
     /// ```
     pub fn augment(&self) -> Self {
         return Self {
@@ -393,8 +369,8 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(NOTE_C.diminish(), NOTE_C_FLAT);
-    /// assert_eq!(NOTE_G.diminish(), NOTE_G_FLAT);
+    /// assert_eq!(C.diminish(), C_FLAT);
+    /// assert_eq!(G.diminish(), G_FLAT);
     /// ```
     pub fn diminish(&self) -> Self {
         return Self {
@@ -407,8 +383,8 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(NOTE_D_FLAT.alter(2), NOTE_D_SHARP);
-    /// assert_eq!(NOTE_A_SHARP.alter(-1), NOTE_A);
+    /// assert_eq!(D_FLAT.alter(2), D_SHARP);
+    /// assert_eq!(A_SHARP.alter(-1), A);
     /// ```
     pub fn alter(&self, alt: i8) -> Self {
         return Self {
@@ -421,9 +397,9 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// let mut note = NOTE_C;
+    /// let mut note = C;
     /// note.mut_augment();
-    /// assert_eq!(note, NOTE_C_SHARP);
+    /// assert_eq!(note, C_SHARP);
     /// ```
     pub fn mut_augment(&mut self) {
         self.alt += 1
@@ -433,9 +409,9 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// let mut note = NOTE_F;
+    /// let mut note = F;
     /// note.mut_diminish();
-    /// assert_eq!(note, NOTE_F_FLAT);
+    /// assert_eq!(note, F_FLAT);
     /// ```
     pub fn mut_diminish(&mut self) {
         self.alt -= 1
@@ -445,9 +421,9 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// let mut note = NOTE_G_SHARP;
+    /// let mut note = G_SHARP;
     /// note.mut_alter(-2);
-    /// assert_eq!(note, NOTE_G_FLAT);
+    /// assert_eq!(note, G_FLAT);
     /// ```
     pub fn mut_alter(&mut self, alt: i8) {
         self.alt += alt
@@ -467,8 +443,8 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert!(NOTE_C_FLAT.is_enharmonic(NOTE_B));
-    /// assert!(!NOTE_F.is_enharmonic(NOTE_G));
+    /// assert!(C_FLAT.is_enharmonic(B));
+    /// assert!(!F.is_enharmonic(G));
     /// ```
     pub fn is_enharmonic(&self, other: Note) -> bool {
         wrap_chroma(self.chroma() - other.chroma()) == 0
@@ -495,59 +471,59 @@ mod test {
 
     #[test]
     fn chromatic_run_ascending() {
-        let mut note = NOTE_C;
+        let mut note = C;
         note = note.augment();
-        assert_eq!(note, NOTE_C_SHARP);
+        assert_eq!(note, C_SHARP);
         note = note.augment().reduce();
-        assert_eq!(note, NOTE_D);
+        assert_eq!(note, D);
         note = note.augment();
-        assert_eq!(note, NOTE_D_SHARP);
+        assert_eq!(note, D_SHARP);
         note = note.augment().reduce();
-        assert_eq!(note, NOTE_E);
+        assert_eq!(note, E);
         note = note.augment().reduce();
-        assert_eq!(note, NOTE_F);
+        assert_eq!(note, F);
         note = note.augment();
-        assert_eq!(note, NOTE_F_SHARP);
+        assert_eq!(note, F_SHARP);
         note = note.augment().reduce();
-        assert_eq!(note, NOTE_G);
+        assert_eq!(note, G);
         note = note.augment();
-        assert_eq!(note, NOTE_G_SHARP);
+        assert_eq!(note, G_SHARP);
         note = note.augment().reduce();
-        assert_eq!(note, NOTE_A);
+        assert_eq!(note, A);
         note = note.augment();
-        assert_eq!(note, NOTE_A_SHARP);
+        assert_eq!(note, A_SHARP);
         note = note.augment().reduce();
-        assert_eq!(note, NOTE_B);
+        assert_eq!(note, B);
         note = note.augment().reduce();
-        assert_eq!(note, NOTE_C);
+        assert_eq!(note, C);
     }
 
     #[test]
     fn chromatic_run_descending() {
-        let mut note = NOTE_C;
+        let mut note = C;
         note = note.diminish().reduce();
-        assert_eq!(note, NOTE_B);
+        assert_eq!(note, B);
         note = note.diminish();
-        assert_eq!(note, NOTE_B_FLAT);
+        assert_eq!(note, B_FLAT);
         note = note.diminish().reduce();
-        assert_eq!(note, NOTE_A);
+        assert_eq!(note, A);
         note = note.diminish();
-        assert_eq!(note, NOTE_A_FLAT);
+        assert_eq!(note, A_FLAT);
         note = note.diminish().reduce();
-        assert_eq!(note, NOTE_G);
+        assert_eq!(note, G);
         note = note.diminish();
-        assert_eq!(note, NOTE_G_FLAT);
+        assert_eq!(note, G_FLAT);
         note = note.diminish().reduce();
-        assert_eq!(note, NOTE_F);
+        assert_eq!(note, F);
         note = note.diminish().reduce();
-        assert_eq!(note, NOTE_E);
+        assert_eq!(note, E);
         note = note.diminish();
-        assert_eq!(note, NOTE_E_FLAT);
+        assert_eq!(note, E_FLAT);
         note = note.diminish().reduce();
-        assert_eq!(note, NOTE_D);
+        assert_eq!(note, D);
         note = note.diminish();
-        assert_eq!(note, NOTE_D_FLAT);
+        assert_eq!(note, D_FLAT);
         note = note.diminish().reduce();
-        assert_eq!(note, NOTE_C);
+        assert_eq!(note, C);
     }
 }

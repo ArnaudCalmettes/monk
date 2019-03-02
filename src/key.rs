@@ -28,19 +28,11 @@
 //!
 //! assert_eq!(
 //!     KEY_G_MAJOR.notes(),
-//!     vec![NOTE_G, NOTE_A, NOTE_B, NOTE_C, NOTE_D, NOTE_E, NOTE_F_SHARP]
+//!     vec![G, A, B, C, D, E, F_SHARP]
 //! );
 //! assert_eq!(
 //!     KEY_E_FLAT_MINOR.notes(),
-//!     vec![
-//!         NOTE_E_FLAT,
-//!         NOTE_F,
-//!         NOTE_G_FLAT,
-//!         NOTE_A_FLAT,
-//!         NOTE_B_FLAT,
-//!         NOTE_C_FLAT,
-//!         NOTE_D_FLAT
-//!     ]
+//!     vec![E_FLAT, F, G_FLAT, A_FLAT, B_FLAT, C_FLAT, D_FLAT]
 //! );
 //! ```
 //!
@@ -52,8 +44,8 @@
 //! ```
 //! use monk::key::*;
 //! use monk::note::*;
-//! assert_eq!(KEY_G_MAJOR.note_from_chroma(6), NOTE_F_SHARP);
-//! assert_eq!(KEY_E_FLAT_MINOR.note_from_chroma(6), NOTE_G_FLAT);
+//! assert_eq!(KEY_G_MAJOR.note_from_chroma(6), F_SHARP);
+//! assert_eq!(KEY_E_FLAT_MINOR.note_from_chroma(6), G_FLAT);
 //! ```
 //!
 //!
@@ -210,7 +202,7 @@ impl Key {
     /// ```
     /// # use monk::key::*;
     /// # use monk::note::*;
-    /// assert_eq!(KEY_A_FLAT_MINOR.tonic(), NOTE_A_FLAT)
+    /// assert_eq!(KEY_A_FLAT_MINOR.tonic(), A_FLAT)
     /// ```
     pub fn tonic(&self) -> Note {
         self.tonic.clone()
@@ -282,12 +274,12 @@ impl Key {
     /// # use monk::note::*;
     /// assert_eq!(
     ///     KEY_G_MAJOR.notes(),
-    ///     vec![NOTE_G, NOTE_A, NOTE_B, NOTE_C, NOTE_D, NOTE_E, NOTE_F_SHARP]
+    ///     vec![G, A, B, C, D, E, F_SHARP]
     /// );
     ///
     /// assert_eq!(
     ///     KEY_G_MINOR.notes(),
-    ///     vec![NOTE_G, NOTE_A, NOTE_B_FLAT, NOTE_C, NOTE_D, NOTE_E_FLAT, NOTE_F]
+    ///     vec![G, A, B_FLAT, C, D, E_FLAT, F]
     /// );
     /// ```
     pub fn notes(&self) -> Vec<Note> {
@@ -323,11 +315,11 @@ impl Key {
     /// ```
     /// # use monk::key::*;
     /// # use monk::note::*;
-    /// assert_eq!(KEY_C_MAJOR.note_from_chroma(0), NOTE_C);
-    /// assert_eq!(KEY_C_SHARP_MAJOR.note_from_chroma(0), NOTE_B_SHARP);
+    /// assert_eq!(KEY_C_MAJOR.note_from_chroma(0), C);
+    /// assert_eq!(KEY_C_SHARP_MAJOR.note_from_chroma(0), B_SHARP);
     ///
     /// // C is non-diatonic to Cb Major
-    /// assert_eq!(KEY_C_FLAT_MAJOR.note_from_chroma(0), NOTE_C);
+    /// assert_eq!(KEY_C_FLAT_MAJOR.note_from_chroma(0), C);
     /// ```
     pub fn note_from_chroma(&self, chroma: Chroma) -> Note {
         for note in self.notes() {
@@ -347,139 +339,139 @@ impl fmt::Display for Key {
 }
 
 pub const KEY_C_MAJOR: Key = Key {
-    tonic: NOTE_C,
+    tonic: C,
     mode: KeyMode::Major,
 };
 pub const KEY_A_MINOR: Key = Key {
-    tonic: NOTE_A,
+    tonic: A,
     mode: KeyMode::Minor,
 };
 
 // Circle of fifths, ascending (sharps)
 pub const KEY_G_MAJOR: Key = Key {
-    tonic: NOTE_G,
+    tonic: G,
     mode: KeyMode::Major,
 };
 pub const KEY_E_MINOR: Key = Key {
-    tonic: NOTE_E,
+    tonic: E,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_D_MAJOR: Key = Key {
-    tonic: NOTE_D,
+    tonic: D,
     mode: KeyMode::Major,
 };
 pub const KEY_B_MINOR: Key = Key {
-    tonic: NOTE_B,
+    tonic: B,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_A_MAJOR: Key = Key {
-    tonic: NOTE_A,
+    tonic: A,
     mode: KeyMode::Major,
 };
 pub const KEY_F_SHARP_MINOR: Key = Key {
-    tonic: NOTE_F_SHARP,
+    tonic: F_SHARP,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_E_MAJOR: Key = Key {
-    tonic: NOTE_E,
+    tonic: E,
     mode: KeyMode::Major,
 };
 pub const KEY_C_SHARP_MINOR: Key = Key {
-    tonic: NOTE_C_SHARP,
+    tonic: C_SHARP,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_B_MAJOR: Key = Key {
-    tonic: NOTE_B,
+    tonic: B,
     mode: KeyMode::Major,
 };
 pub const KEY_G_SHARP_MINOR: Key = Key {
-    tonic: NOTE_G_SHARP,
+    tonic: G_SHARP,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_F_SHARP_MAJOR: Key = Key {
-    tonic: NOTE_F_SHARP,
+    tonic: F_SHARP,
     mode: KeyMode::Major,
 };
 pub const KEY_D_SHARP_MINOR: Key = Key {
-    tonic: NOTE_D_SHARP,
+    tonic: D_SHARP,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_C_SHARP_MAJOR: Key = Key {
-    tonic: NOTE_C_SHARP,
+    tonic: C_SHARP,
     mode: KeyMode::Major,
 };
 pub const KEY_A_SHARP_MINOR: Key = Key {
-    tonic: NOTE_A_SHARP,
+    tonic: A_SHARP,
     mode: KeyMode::Minor,
 };
 
 // Circle of fifths, descending (flats)
 pub const KEY_F_MAJOR: Key = Key {
-    tonic: NOTE_F,
+    tonic: F,
     mode: KeyMode::Major,
 };
 pub const KEY_D_MINOR: Key = Key {
-    tonic: NOTE_D,
+    tonic: D,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_B_FLAT_MAJOR: Key = Key {
-    tonic: NOTE_B_FLAT,
+    tonic: B_FLAT,
     mode: KeyMode::Major,
 };
 pub const KEY_G_MINOR: Key = Key {
-    tonic: NOTE_G,
+    tonic: G,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_E_FLAT_MAJOR: Key = Key {
-    tonic: NOTE_E_FLAT,
+    tonic: E_FLAT,
     mode: KeyMode::Major,
 };
 pub const KEY_C_MINOR: Key = Key {
-    tonic: NOTE_C,
+    tonic: C,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_A_FLAT_MAJOR: Key = Key {
-    tonic: NOTE_A_FLAT,
+    tonic: A_FLAT,
     mode: KeyMode::Major,
 };
 pub const KEY_F_MINOR: Key = Key {
-    tonic: NOTE_F,
+    tonic: F,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_D_FLAT_MAJOR: Key = Key {
-    tonic: NOTE_D_FLAT,
+    tonic: D_FLAT,
     mode: KeyMode::Major,
 };
 pub const KEY_B_FLAT_MINOR: Key = Key {
-    tonic: NOTE_B_FLAT,
+    tonic: B_FLAT,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_G_FLAT_MAJOR: Key = Key {
-    tonic: NOTE_G_FLAT,
+    tonic: G_FLAT,
     mode: KeyMode::Major,
 };
 pub const KEY_E_FLAT_MINOR: Key = Key {
-    tonic: NOTE_E_FLAT,
+    tonic: E_FLAT,
     mode: KeyMode::Minor,
 };
 
 pub const KEY_C_FLAT_MAJOR: Key = Key {
-    tonic: NOTE_C_FLAT,
+    tonic: C_FLAT,
     mode: KeyMode::Major,
 };
 pub const KEY_A_FLAT_MINOR: Key = Key {
-    tonic: NOTE_A_FLAT,
+    tonic: A_FLAT,
     mode: KeyMode::Minor,
 };
 
@@ -542,97 +534,37 @@ mod test {
 
     #[test]
     fn major_scales() {
-        assert_eq!(
-            KEY_C_MAJOR.notes(),
-            vec![NOTE_C, NOTE_D, NOTE_E, NOTE_F, NOTE_G, NOTE_A, NOTE_B]
-        );
-        assert_eq!(
-            KEY_G_MAJOR.notes(),
-            vec![NOTE_G, NOTE_A, NOTE_B, NOTE_C, NOTE_D, NOTE_E, NOTE_F_SHARP]
-        );
+        assert_eq!(KEY_C_MAJOR.notes(), vec![C, D, E, F, G, A, B]);
+        assert_eq!(KEY_G_MAJOR.notes(), vec![G, A, B, C, D, E, F_SHARP]);
         assert_eq!(
             KEY_A_FLAT_MAJOR.notes(),
-            vec![
-                NOTE_A_FLAT,
-                NOTE_B_FLAT,
-                NOTE_C,
-                NOTE_D_FLAT,
-                NOTE_E_FLAT,
-                NOTE_F,
-                NOTE_G,
-            ]
+            vec![A_FLAT, B_FLAT, C, D_FLAT, E_FLAT, F, G,]
         );
         assert_eq!(
             KEY_C_FLAT_MAJOR.notes(),
-            vec![
-                NOTE_C_FLAT,
-                NOTE_D_FLAT,
-                NOTE_E_FLAT,
-                NOTE_F_FLAT,
-                NOTE_G_FLAT,
-                NOTE_A_FLAT,
-                NOTE_B_FLAT,
-            ]
+            vec![C_FLAT, D_FLAT, E_FLAT, F_FLAT, G_FLAT, A_FLAT, B_FLAT,]
         );
         assert_eq!(
             KEY_C_SHARP_MAJOR.notes(),
-            vec![
-                NOTE_C_SHARP,
-                NOTE_D_SHARP,
-                NOTE_E_SHARP,
-                NOTE_F_SHARP,
-                NOTE_G_SHARP,
-                NOTE_A_SHARP,
-                NOTE_B_SHARP,
-            ]
+            vec![C_SHARP, D_SHARP, E_SHARP, F_SHARP, G_SHARP, A_SHARP, B_SHARP,]
         );
     }
 
     #[test]
     fn minor_scales() {
-        assert_eq!(
-            KEY_A_MINOR.notes(),
-            vec![NOTE_A, NOTE_B, NOTE_C, NOTE_D, NOTE_E, NOTE_F, NOTE_G]
-        );
-        assert_eq!(
-            KEY_E_MINOR.notes(),
-            vec![NOTE_E, NOTE_F_SHARP, NOTE_G, NOTE_A, NOTE_B, NOTE_C, NOTE_D]
-        );
+        assert_eq!(KEY_A_MINOR.notes(), vec![A, B, C, D, E, F, G]);
+        assert_eq!(KEY_E_MINOR.notes(), vec![E, F_SHARP, G, A, B, C, D]);
         assert_eq!(
             KEY_F_MINOR.notes(),
-            vec![
-                NOTE_F,
-                NOTE_G,
-                NOTE_A_FLAT,
-                NOTE_B_FLAT,
-                NOTE_C,
-                NOTE_D_FLAT,
-                NOTE_E_FLAT,
-            ]
+            vec![F, G, A_FLAT, B_FLAT, C, D_FLAT, E_FLAT,]
         );
         assert_eq!(
             KEY_A_FLAT_MINOR.notes(),
-            vec![
-                NOTE_A_FLAT,
-                NOTE_B_FLAT,
-                NOTE_C_FLAT,
-                NOTE_D_FLAT,
-                NOTE_E_FLAT,
-                NOTE_F_FLAT,
-                NOTE_G_FLAT,
-            ]
+            vec![A_FLAT, B_FLAT, C_FLAT, D_FLAT, E_FLAT, F_FLAT, G_FLAT,]
         );
         assert_eq!(
             KEY_A_SHARP_MINOR.notes(),
-            vec![
-                NOTE_A_SHARP,
-                NOTE_B_SHARP,
-                NOTE_C_SHARP,
-                NOTE_D_SHARP,
-                NOTE_E_SHARP,
-                NOTE_F_SHARP,
-                NOTE_G_SHARP,
-            ]
+            vec![A_SHARP, B_SHARP, C_SHARP, D_SHARP, E_SHARP, F_SHARP, G_SHARP,]
         );
     }
 }
