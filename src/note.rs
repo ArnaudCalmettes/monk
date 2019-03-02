@@ -27,8 +27,8 @@
 //!
 //! ## Chromatic representation and enharmony
 //!
-//! It is often easier to think of notes as degrees of the chromatic scale. For this reason,
-//! we can convert `Note`s from and to integer values (`i8`) representing chromatic degrees.
+//! It is often easier to think of notes as degrees of the chromatic scale ("chromas"). For this reason,
+//! we can convert `Note`s from and to integer values (`Chroma`, i.e. `i8`) representing chromatic degrees.
 //!
 //! In this representation:
 //!
@@ -40,23 +40,23 @@
 //!
 //! ```
 //! # use monk::note::*;
-//! assert_eq!(NOTE_C.degree(), 0);
-//! assert_eq!(NOTE_C_SHARP.degree(), 1);
-//! assert_eq!(NOTE_D.degree(), 2);
-//! assert_eq!(NOTE_B.degree(), 11);
+//! assert_eq!(NOTE_C.chroma(), 0);
+//! assert_eq!(NOTE_C_SHARP.chroma(), 1);
+//! assert_eq!(NOTE_D.chroma(), 2);
+//! assert_eq!(NOTE_B.chroma(), 11);
 //!
-//! assert_eq!(Note::from_degree(0, true), NOTE_C);
-//! assert_eq!(Note::from_degree(1, true), NOTE_C_SHARP);
-//! assert_eq!(Note::from_degree(2, true), NOTE_D);
+//! assert_eq!(Note::from_chroma(0, true), NOTE_C);
+//! assert_eq!(Note::from_chroma(1, true), NOTE_C_SHARP);
+//! assert_eq!(Note::from_chroma(2, true), NOTE_D);
 //!
-//! // Represent degree 2 as a diminished D instead of an augmented C
-//! assert_eq!(Note::from_degree(1, false), NOTE_D_FLAT);
+//! // Represent chroma 2 as a diminished D instead of an augmented C
+//! assert_eq!(Note::from_chroma(1, false), NOTE_D_FLAT);
 //!
 //! // Any i8 value is accepted.
-//! assert_eq!(Note::from_degree(-34, true), NOTE_D);
+//! assert_eq!(Note::from_chroma(-34, true), NOTE_D);
 //! ```
 //!
-//! The second parameter to `Note::from_degree` is used to choose whether chromatic notes should be
+//! The second parameter to `Note::from_chroma` is used to choose whether chromatic notes should be
 //! considered as augmented (`true`) or diminished (`false`) neighbour notes.
 //!
 //! In order to stay theoretically sound, `monk` distinguishes note equality from enharmony.
@@ -69,6 +69,8 @@
 //! assert!(NOTE_C_SHARP.is_enharmonic(NOTE_D_FLAT));  // But they are enharmonic
 //! ```
 use std::fmt;
+
+pub type Chroma = i8;
 
 /// Note "roots" correspond to the notes of the C major scale (the white keys of a piano keyboard).
 
@@ -88,10 +90,10 @@ impl NoteRoot {
     ///
     /// ```
     /// # use monk::note::NoteRoot;
-    /// assert_eq!(NoteRoot::C.degree(), 0);
-    /// assert_eq!(NoteRoot::B.degree(), 11);
+    /// assert_eq!(NoteRoot::C.chroma(), 0);
+    /// assert_eq!(NoteRoot::B.chroma(), 11);
     /// ```
-    pub fn degree(&self) -> i8 {
+    pub fn chroma(&self) -> Chroma {
         match self {
             NoteRoot::C => 0,
             NoteRoot::D => 2,
@@ -125,12 +127,12 @@ impl fmt::Display for NoteRoot {
 /// Wrap a chromatic degree to get its canonical value in [0; 11].
 ///
 /// ```
-/// # use monk::note::wrap_degree;
-/// assert_eq!(wrap_degree(3), 3);
-/// assert_eq!(wrap_degree(-5), 7);
-/// assert_eq!(wrap_degree(26), 2);
+/// # use monk::note::wrap_chroma;
+/// assert_eq!(wrap_chroma(3), 3);
+/// assert_eq!(wrap_chroma(-5), 7);
+/// assert_eq!(wrap_chroma(26), 2);
 /// ```
-pub fn wrap_degree(n: i8) -> i8 {
+pub fn wrap_chroma(n: Chroma) -> Chroma {
     let res = n % 12;
     if res < 0 {
         res + 12
@@ -329,31 +331,31 @@ impl Note {
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(NOTE_B_FLAT.degree(), NoteRoot::B.degree() - 1);
-    /// assert_eq!(NOTE_C_SHARP.degree(), NoteRoot::C.degree() + 1);
+    /// assert_eq!(NOTE_B_FLAT.chroma(), NoteRoot::B.chroma() - 1);
+    /// assert_eq!(NOTE_C_SHARP.chroma(), NoteRoot::C.chroma() + 1);
     /// ```
-    pub fn degree(&self) -> i8 {
-        self.base.degree() + self.alt
+    pub fn chroma(&self) -> Chroma {
+        self.base.chroma() + self.alt
     }
 
     /// Construct a new note given its chromatic degree.
     ///
-    /// `degree` may be any signed byte. If `sharp` is `true`, consider any half-step as an
+    /// `chroma` may be any signed byte. If `sharp` is `true`, consider any half-step as an
     /// augmented neighbor. Otherwise, consider half-steps as a diminished neighbor.
     ///
     /// ```
     /// # use monk::note::*;
-    /// assert_eq!(Note::from_degree(3, true), NOTE_D_SHARP);
-    /// assert_eq!(Note::from_degree(3, false), NOTE_E_FLAT);
-    /// assert_eq!(Note::from_degree(48, true), NOTE_C);
-    /// assert_eq!(Note::from_degree(-18, true), NOTE_F_SHARP);
+    /// assert_eq!(Note::from_chroma(3, true), NOTE_D_SHARP);
+    /// assert_eq!(Note::from_chroma(3, false), NOTE_E_FLAT);
+    /// assert_eq!(Note::from_chroma(48, true), NOTE_C);
+    /// assert_eq!(Note::from_chroma(-18, true), NOTE_F_SHARP);
     /// ```
-    pub fn from_degree(degree: i8, sharp: bool) -> Self {
-        let degree = wrap_degree(degree) as usize;
+    pub fn from_chroma(chroma: Chroma, sharp: bool) -> Self {
+        let chroma = wrap_chroma(chroma) as usize;
         if sharp {
-            NOTES_SHARP[degree].clone()
+            NOTES_SHARP[chroma].clone()
         } else {
-            NOTES_FLAT[degree].clone()
+            NOTES_FLAT[chroma].clone()
         }
     }
 
@@ -366,7 +368,7 @@ impl Note {
     /// assert_eq!(note.reduce(), NOTE_F_SHARP);
     /// ```
     pub fn reduce(&self) -> Self {
-        Self::from_degree(self.degree(), self.alt >= 0)
+        Self::from_chroma(self.chroma(), self.alt >= 0)
     }
 
     /// Add one sharp to the note.
@@ -461,7 +463,7 @@ impl Note {
         self.alt < 0
     }
 
-    /// Test whether both notes correspond to the same degree on the chromatic scale.
+    /// Test whether both notes correspond to the same chroma on the chromatic scale.
     ///
     /// ```
     /// # use monk::note::*;
@@ -469,7 +471,7 @@ impl Note {
     /// assert!(!NOTE_F.is_enharmonic(NOTE_G));
     /// ```
     pub fn is_enharmonic(&self, other: Note) -> bool {
-        wrap_degree(self.degree() - other.degree()) == 0
+        wrap_chroma(self.chroma() - other.chroma()) == 0
     }
 
     fn fmt_alt(&self) -> String {

@@ -52,8 +52,8 @@
 //! ```
 //! use monk::key::*;
 //! use monk::note::*;
-//! assert_eq!(KEY_G_MAJOR.note_from_degree(6), NOTE_F_SHARP);
-//! assert_eq!(KEY_E_FLAT_MINOR.note_from_degree(6), NOTE_G_FLAT);
+//! assert_eq!(KEY_G_MAJOR.note_from_chroma(6), NOTE_F_SHARP);
+//! assert_eq!(KEY_E_FLAT_MINOR.note_from_chroma(6), NOTE_G_FLAT);
 //! ```
 //!
 //!
@@ -145,8 +145,8 @@ const FLAT_ORDER: [NoteRoot; 7] = [
 const PERFECT_FOURTH: i8 = 5;
 const PERFECT_FIFTH: i8 = 7;
 
-fn count_key_jumps(tonic_degree: i8, interval: i8) -> i8 {
-    let mut tonic = wrap_degree(tonic_degree);
+fn count_key_jumps(tonic_chroma: Chroma, interval: i8) -> i8 {
+    let mut tonic = wrap_chroma(tonic_chroma);
     let mut jumps = 0;
     while tonic % 12 != 0 {
         tonic -= interval;
@@ -156,28 +156,28 @@ fn count_key_jumps(tonic_degree: i8, interval: i8) -> i8 {
 }
 
 #[inline]
-fn count_flats(tonic_degree: i8) -> i8 {
-    count_key_jumps(tonic_degree, PERFECT_FOURTH)
+fn count_flats(tonic_chroma: Chroma) -> i8 {
+    count_key_jumps(tonic_chroma, PERFECT_FOURTH)
 }
 
 #[inline]
-fn count_sharps(tonic_degree: i8) -> i8 {
-    count_key_jumps(tonic_degree, PERFECT_FIFTH)
+fn count_sharps(tonic_chroma: Chroma) -> i8 {
+    count_key_jumps(tonic_chroma, PERFECT_FIFTH)
 }
 
 fn count_alterations(tonic: &Note, minor: bool) -> i8 {
-    let degree = match minor {
-        true => tonic.degree() + 3,
-        false => tonic.degree(),
+    let chroma = match minor {
+        true => tonic.chroma() + 3,
+        false => tonic.chroma(),
     };
     if tonic.is_flat() {
-        return -count_flats(degree);
+        return -count_flats(chroma);
     }
-    let sharps = count_sharps(degree);
+    let sharps = count_sharps(chroma);
     if tonic.is_sharp() || sharps <= 6 {
         return sharps;
     }
-    return -count_flats(degree);
+    return -count_flats(chroma);
 }
 
 impl Key {
@@ -198,9 +198,9 @@ impl Key {
         if alts < -7 || alts > 7 {
             panic!("Attempted to create a key with alts < -7 or > 7.")
         }
-        let degree = PERFECT_FIFTH * (alts % 7);
+        let chroma = PERFECT_FIFTH * (alts % 7);
         Key {
-            tonic: Note::from_degree(degree, alts > 0).alter(alts / 7),
+            tonic: Note::from_chroma(chroma, alts > 0).alter(alts / 7),
             mode: KeyMode::Major,
         }
     }
@@ -318,25 +318,25 @@ impl Key {
     /// Get the note corresponding to a chromatic degree, within the context of this key.
     ///
     /// If the note isn't diatonic to this key, the result is the same as calling
-    /// `Note::from_degree` with the key's inherent "flatness" or "sharpness".
+    /// `Note::from_chroma` with the key's inherent "flatness" or "sharpness".
     ///
     /// ```
     /// # use monk::key::*;
     /// # use monk::note::*;
-    /// assert_eq!(KEY_C_MAJOR.note_from_degree(0), NOTE_C);
-    /// assert_eq!(KEY_C_SHARP_MAJOR.note_from_degree(0), NOTE_B_SHARP);
+    /// assert_eq!(KEY_C_MAJOR.note_from_chroma(0), NOTE_C);
+    /// assert_eq!(KEY_C_SHARP_MAJOR.note_from_chroma(0), NOTE_B_SHARP);
     ///
     /// // C is non-diatonic to Cb Major
-    /// assert_eq!(KEY_C_FLAT_MAJOR.note_from_degree(0), NOTE_C);
+    /// assert_eq!(KEY_C_FLAT_MAJOR.note_from_chroma(0), NOTE_C);
     /// ```
-    pub fn note_from_degree(&self, degree: i8) -> Note {
+    pub fn note_from_chroma(&self, chroma: Chroma) -> Note {
         for note in self.notes() {
-            if wrap_degree(note.degree() - degree) == 0 {
+            if wrap_chroma(note.chroma() - chroma) == 0 {
                 return note;
             }
         }
-        // Non-diatonic note, fall back to Note::from_degree
-        Note::from_degree(degree, !self.tonic.is_flat())
+        // Non-diatonic note, fall back to Note::from_chroma
+        Note::from_chroma(chroma, !self.tonic.is_flat())
     }
 }
 
